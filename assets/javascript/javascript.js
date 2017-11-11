@@ -1,5 +1,6 @@
 	//declare an array that contains an array of strings
-	var characters = ["Alex" , 
+	var characters = [
+  "Alex".toLowerCase() , 
   "Gouki".toLowerCase() , 
   "ChunLi".toLowerCase() , 
   "Dudley".toLowerCase() , 
@@ -63,7 +64,8 @@
 			//read input, if input is in correctAnswer, replace all instances of input in blankArray, add input to guessSoFar, ignore repeated inputs.
 
 			//if you're wrong (input is not in correctAnswer and input is not in guessSoFar, add input to guessSoFar, decrement guessesLeft, 
-			if (correctAnswer.indexOf(whatYouGuessed) === -1 && guessesLeft > -1 && guessSoFar.indexOf(whatYouGuessed) === -1 && legal.indexOf(whatYouGuessed) > -1 && blankArray.indexOf(" _") > -1 && done === false && restarted === true) {
+			if (correctAnswer.indexOf(whatYouGuessed) === -1 && guessesLeft > -1 && guessSoFar.indexOf(whatYouGuessed) === -1 && legal.indexOf(whatYouGuessed.toLowerCase()
+.toLowerCase()) > -1 && blankArray.indexOf(" _") > -1 && done === false && restarted === true) {
 
 				guessesLeft = guessesLeft - 1;
 				guessSoFar.push(whatYouGuessed);
@@ -77,12 +79,14 @@
 				guessSoFar.push(whatYouGuessed);
 				document.getElementById("lettersGuessed").innerHTML = guessSoFar;
 
-				for (i = 0; i < correctAnswer.length; i++) {
+					for (i = 0; i < correctAnswer.length; i++) {
 
+						if (done === false && restarted === true) {
 					blankArray[tempString.indexOf(whatYouGuessed)] = whatYouGuessed;
 					delete tempString[tempString.indexOf(whatYouGuessed)];
 					
 					document.getElementById("characterName").innerHTML = blankArray.join("");
+				}
 					
 				};
 
