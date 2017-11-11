@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hangman</title>
+</head>
+<body>
+<!--  -->
+<div> 
+
+	<button id="start" onclick="playGame()">Start</button>
+	<button id="reset" onclick="resetGame()">Reset</button>
+
+	<p id="Rules"> 
+		Your mission is to guess the name of the Street Fighter 3: Third Strike character.  <br>
+		You will guess letters by typing. <br>
+		If the letter you guess is in the character's name, it will be revealed, if not, you will get a strike. <br>
+		Failure to guess the character's name before your strike count reaches 7 will result in a game over<br> 
+		Press the Start button to begin <br>
+
+		<h2>Wins: <span id="winCount">0</span> </h2>
+
+	</p>
+	<div id="iWasThinking">
+		<h2>I was thinking of <span id="answer"> </span></h2>
+	</div>
+	<div id="gameStart">
+		<p id="correctName"> Name this character: <br> <span id="characterName"> </span> </p>
+		<p>Strikes Remaining: <span id="guessesRemaining"> </span></p>
+		<p id="lettersGuessed">Letters Guessed: </p>
+	</div>
+
+	<div id="gameOver">
+		<h3 id="youWere">You were <span id="rightOrWrong"></span>, the answer was <span id="theAnswerWas"> 
+		</span></h3>
+
+	</div>
+
+</div>
+
+
+	<style type="text/css">
+	#iWasThinking, #gameStart, #gameOver {
+		display: none;
+	}
+
+		
+	</style>
+
+
+
+	<script type="text/javascript">
+		//declare an array that contains an array of strings
+	var characters = ["Alex" , 
+  "Akuma" , 
+  "Chun-Li" , 
+  "Dudley" , 
+  "Elena" , 
+  "Gill" , 
+  "Hugo" , 
+  "Ibuki" , 
+  "Ken" , 
+  "Makoto" , 
+  "Necro" , 
+  "Oro" , 
+  "Q" , 
+  "Remy" , 
+  "Ryu" , 
+  "Sean" , 
+  "Twelve" , 
+  "Urien" , 
+  "Yang" , 
+  "Yun" ]; 
+
+	var guessesLeft = 7;
+	var whatYouGuessed = "";
+	var correctAnswer = characters[Math.floor(Math.random() * characters.length)];
+	var blankArray = [];
+	var guessSoFar = []
+	
+
+	function playGame() {
+		//initialize values
+		guessesLeft = 7;
+		whatYouGuessed = "";
+		blankArray = [];
+		guessSoFar = []
+		document.getElementById("lettersGuessed").innerHTML = guessSoFar;
+
+		//show the game
+		document.getElementById("gameStart").style.display = "initial";
+		document.getElementById("guessesRemaining").innerHTML = guessesLeft;
+
+		//show blank characters for the name 
+		for (i = 0; i < correctAnswer.length; i++) {
+		  	blankArray[i] = " _";
+
+		}; 
+
+		document.getElementById("characterName").innerHTML = blankArray.join("");
+
+		//take guesses
+		document.onkeyup = function(event) {
+			whatYouGuessed = String.fromCharCode(event.keyCode).toLowerCase();
+
+			//read input, if input is in correctAnswer, replace all instances of input in blankArray, add input to guessSoFar, ignore repeated inputs.
+
+			//if you're wrong (input is not in correctAnswer and input is not in guessSoFar, add input to guessSoFar, decrement guessesLeft, 
+			if (correctAnswer.indexOf(whatYouGuessed) === -1 && guessesLeft > -1 && guessSoFar.indexOf(whatYouGuessed) === -1) {
+
+				guessesLeft = guessesLeft - 1;
+				guessSoFar.push(whatYouGuessed);
+				document.getElementById("lettersGuessed").innerHTML = guessSoFar;
+				document.getElementById("guessesRemaining").innerHTML = guessesLeft;
+
+			} //if you're right, clone correct answer, find first index of input in clone replace the blankArray.indexOf(input), delete the input out of the clone, go again
+
+			else {
+				var tempString = correctAnswer;
+
+				while (tempString.indexOf(whatYouGuessed) > -1) {
+					blankArray.indexOf()
+
+
+
+				};
+
+				//set the blankArray[correctAnswer.indexOf(whatYouGuess)]
+
+
+			};
+
+			if (guessesLeft === 0) {
+				guessesLeft = guessesLeft - 1;
+
+
+			}
+
+		};
+
+	};
+
+	function resetGame() {
+		//initialize variables and play again
+		correctAnswer = characters[Math.floor(Math.random() * characters.length)];
+		guessesLeft = 7;
+		whatYouGuessed = "";
+		blankArray = []
+		//hide the game 
+		document.getElementById("gameStart").style.display = "none";
+		document.getElementById("guessesRemaining").innerHTML = guessesLeft;
+
+
+	};
+
+
+
+
+	</script>
+</body>
+</html>
