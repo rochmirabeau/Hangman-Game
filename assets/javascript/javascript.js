@@ -73,11 +73,17 @@
 			} //if you're right, clone correct answer, find first index of input in clone replace the blankArray.indexOf(input), delete the input out of the clone, go again
 
 			else {
-				if (guessesLeft > -1 && done === false)
+				if (guessesLeft > -1 && done === false && guessSoFar.indexOf(whatYouGuessed) === -1)
+				guessSoFar.push(whatYouGuessed);
+				document.getElementById("lettersGuessed").innerHTML = guessSoFar;
+
 				for (i = 0; i < correctAnswer.length; i++) {
+
 					blankArray[tempString.indexOf(whatYouGuessed)] = whatYouGuessed;
 					delete tempString[tempString.indexOf(whatYouGuessed)];
+					
 					document.getElementById("characterName").innerHTML = blankArray.join("");
+					
 				};
 
 				// do {
