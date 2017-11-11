@@ -54,8 +54,8 @@
 
 		document.getElementById("characterName").innerHTML = blankArray.join("");
 
-		//take guesses only if done is false
-		if (done === false) {
+		//take guesses only if done is false and restarted is true
+		if (done === false && restarted === true) {
 
 		document.onkeyup = function(event) {
 			whatYouGuessed = String.fromCharCode(event.keyCode).toLowerCase();
@@ -63,7 +63,7 @@
 			//read input, if input is in correctAnswer, replace all instances of input in blankArray, add input to guessSoFar, ignore repeated inputs.
 
 			//if you're wrong (input is not in correctAnswer and input is not in guessSoFar, add input to guessSoFar, decrement guessesLeft, 
-			if (correctAnswer.indexOf(whatYouGuessed) === -1 && guessesLeft > -1 && guessSoFar.indexOf(whatYouGuessed) === -1 && legal.indexOf(whatYouGuessed) > -1 && blankArray.indexOf(" _") > -1 && done === false) {
+			if (correctAnswer.indexOf(whatYouGuessed) === -1 && guessesLeft > -1 && guessSoFar.indexOf(whatYouGuessed) === -1 && legal.indexOf(whatYouGuessed) > -1 && blankArray.indexOf(" _") > -1 && done === false && restarted === true) {
 
 				guessesLeft = guessesLeft - 1;
 				guessSoFar.push(whatYouGuessed);
@@ -73,7 +73,7 @@
 			} //if you're right, clone correct answer, find first index of input in clone replace the blankArray.indexOf(input), delete the input out of the clone, go again
 
 			else {
-				if (guessesLeft > -1 && done === false && guessSoFar.indexOf(whatYouGuessed) === -1)
+				if (guessesLeft > -1 && done === false && restarted === true && guessSoFar.indexOf(whatYouGuessed) === -1 && legal.indexOf(whatYouGuessed) > -1)
 				guessSoFar.push(whatYouGuessed);
 				document.getElementById("lettersGuessed").innerHTML = guessSoFar;
 
@@ -86,24 +86,17 @@
 					
 				};
 
-				// do {
-				// 	blankArray[tempString.indexOf(whatYouGuessed)] = whatYouGuessed;
-				// 	delete tempString[whatYouGuessed];
-				// 	document.getElementById("characterName").innerHTML = blankArray.join("");
-				// } 	while (tempString.indexOf(whatYouGuessed) > -1);
-
-				//set the blankArray[correctAnswer.indexOf(whatYouGuess)]
-
 
 			};
 
 			//if there no "" _ in blankArray, you won
-			if (blankArray.indexOf(" _") === -1 && done === false) {
+			if (blankArray.indexOf(" _") === -1 && done === false && restarted === true) {
 
 				document.getElementById("iWasThinking").style.display = "initial";
 				document.getElementById("answer").innerHTML = correctAnswer.charAt(0).toUpperCase() + correctAnswer.slice(1);
 				wins = wins + 1;
 				done = true
+				restarted = false;
 				document.getElementById("winCount").innerHTML = wins;
 				document.getElementById("gameOver").style.display = "initial"
 
@@ -115,9 +108,10 @@
 			};
 
 			//you lose
-			if (guessesLeft === 0 && done === false) {
+			if (guessesLeft === 0 && done === false && restarted === true) {
 				guessesLeft = guessesLeft - 1;
 				done = true
+				restarted = false
 				document.getElementById("gameOver").style.display = "initial";
 				document.getElementById("rightOrWrong").innerHTML = "Defeated";
 				document.getElementById("iWasThinking").style.display = "initial";
