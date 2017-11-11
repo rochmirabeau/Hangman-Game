@@ -2,29 +2,55 @@
 <html>
 <head>
 	<title>Hangman</title>
+	<link rel="stylesheet" href="assets/css/reset.css" type="text/css">
+	<link rel="stylesheet" href="assets/css/style.css" type="text/css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<link rel="stylesheet" href="assets/css/style.css" type="text/stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script type="text/javascript" src="assets/javascript/javascript.js"></script>
+
+
 </head>
-<body>
+<body style="background-color: black;">
 <!--  -->
-<div> 
+<div class="container-fluid" style="background-color: black; color: lightgrey;" > 
+	
+	<div class="row" >
+	<div class="col-6 offset-3">
+	
+	<div class="jumbotron" style="background-color: darkgrey; color: black;">
+		<img class="img-fluid" src="assets/images/SFIII3rdLogo.png">
+		<h2>3rd Strike Hangman</h2>
+		<p id="Rules"> 
+			Guess the name of the <br>
+			Street Fighter 3: Third Strike character.  <br>
+			Guess letters by typing. <br>
+			<!-- If the letter you guess is in the character's name, it will be revealed, if not, you will get a strike. <br>
+			Failure to guess the character's name before your strike count reaches 7 will result in a game over<br> 
+			<br> -->
+			Press the Start button to begin <br>
 
-	<button id="start" onclick="playGame()">Start</button>
-	<button id="reset" onclick="resetGame()">Reset</button>
+			<button class="btn-success" id="start" onclick="playGame()">Start</button>
+			<button class="btn-danger" id="reset" onclick="resetGame()">Reset</button>
 
-	<p id="Rules"> 
-		Your mission is to guess the name of the Street Fighter 3: Third Strike character.  <br>
-		You will guess letters by typing. <br>
-		If the letter you guess is in the character's name, it will be revealed, if not, you will get a strike. <br>
-		Failure to guess the character's name before your strike count reaches 7 will result in a game over<br> 
-		Press the Start button to begin <br>
+			<h2>Wins: <span id="winCount">0</span> </h2>
 
-		<h2>Wins: <span id="winCount">0</span> </h2>
+		</p>
+	</div>
 
-	</p>
+</div>
+</div>
+<div class="row">
+	<div class="col-6 offset-3">
+	
+	<div class="card text-white bg-dark">
 	<div id="iWasThinking">
 		<h2>I was thinking of <span id="answer"> </span></h2>
+		<img id="portrait" src=#>
 	</div>
 	<div id="gameStart">
-		<p id="correctName"> Name this character: <br> <span id="characterName"> </span> </p>
+		<h2 id="correctName"> Name this character: <br> <span id="characterName"> </span> </h2>
 		<p>Strikes Remaining: <span id="guessesRemaining"> </span></p>
 		<p>Letters Guessed: <span id="lettersGuessed"> </span></p>
 	</div>
@@ -33,165 +59,21 @@
 		<h3 id="youWere">You were: <span id="rightOrWrong"></span></h3>
 
 	</div>
+</div>
+</div>
 
+</div>
+</div>
 </div>
 
 
-	<style type="text/css">
-	#iWasThinking, #gameStart, #gameOver {
-		display: none;
-	}
-
+<!-- 	<style type="text/css">
+	
 		
-	</style>
-
-
-
-	<script type="text/javascript">
-		//declare an array that contains an array of strings
-	var characters = ["Alex" , 
-  "Akuma".toLowerCase() , 
-  "ChunLi".toLowerCase() , 
-  "Dudley".toLowerCase() , 
-  "Elena".toLowerCase() , 
-  "Gill".toLowerCase() , 
-  "Hugo".toLowerCase() , 
-  "Ibuki".toLowerCase() , 
-  "Ken".toLowerCase() , 
-  "Makoto".toLowerCase() , 
-  "Necro".toLowerCase() , 
-  "Oro".toLowerCase() , 
-  "Q".toLowerCase() , 
-  "Remy".toLowerCase() , 
-  "Ryu".toLowerCase() , 
-  "Sean".toLowerCase() , 
-  "Twelve".toLowerCase() , 
-  "Urien".toLowerCase() , 
-  "Yang".toLowerCase() , 
-  "Yun".toLowerCase() ]; 
-
-	var guessesLeft = 7;
-	var whatYouGuessed = "";
-	var correctAnswer = characters[Math.floor(Math.random() * characters.length)].toLowerCase();
-	var blankArray = [];
-	var guessSoFar = [];
-	var tempString = correctAnswer.toLowerCase().split("");
-	var legal = "abcdefghijklmnopqrstuvwxyz";
-	var wins = 0
-	var done = false;
-
-	function playGame() {
-		//initialize values
-		guessesLeft = 7;
-		whatYouGuessed = "";
-		blankArray = [];
-		guessSoFar = [];
-
-
-		document.getElementById("lettersGuessed").innerHTML = guessSoFar;
-
-		//show the game
-		document.getElementById("gameStart").style.display = "initial";
-		document.getElementById("guessesRemaining").innerHTML = guessesLeft;
-
-		//show blank characters for the name 
-		for (i = 0; i < correctAnswer.length; i++) {
-		  	blankArray[i] = " _";
-
-		}; 
-
-		document.getElementById("characterName").innerHTML = blankArray.join("");
-
-		//take guesses
-		document.onkeyup = function(event) {
-			whatYouGuessed = String.fromCharCode(event.keyCode).toLowerCase();
-
-			//read input, if input is in correctAnswer, replace all instances of input in blankArray, add input to guessSoFar, ignore repeated inputs.
-
-			//if you're wrong (input is not in correctAnswer and input is not in guessSoFar, add input to guessSoFar, decrement guessesLeft, 
-			if (correctAnswer.indexOf(whatYouGuessed) === -1 && guessesLeft > -1 && guessSoFar.indexOf(whatYouGuessed) === -1 && legal.indexOf(whatYouGuessed) > -1 && blankArray.indexOf(" _") > -1 && done === false) {
-
-				guessesLeft = guessesLeft - 1;
-				guessSoFar.push(whatYouGuessed);
-				document.getElementById("lettersGuessed").innerHTML = guessSoFar;
-				document.getElementById("guessesRemaining").innerHTML = guessesLeft;
-
-			} //if you're right, clone correct answer, find first index of input in clone replace the blankArray.indexOf(input), delete the input out of the clone, go again
-
-			else {
-				if (guessesLeft > -1 && done === false)
-				for (i = 0; i < correctAnswer.length; i++) {
-					blankArray[tempString.indexOf(whatYouGuessed)] = whatYouGuessed;
-					delete tempString[tempString.indexOf(whatYouGuessed)];
-					document.getElementById("characterName").innerHTML = blankArray.join("");
-				};
-
-				// do {
-				// 	blankArray[tempString.indexOf(whatYouGuessed)] = whatYouGuessed;
-				// 	delete tempString[whatYouGuessed];
-				// 	document.getElementById("characterName").innerHTML = blankArray.join("");
-				// } 	while (tempString.indexOf(whatYouGuessed) > -1);
-
-				//set the blankArray[correctAnswer.indexOf(whatYouGuess)]
-
-
-			};
-
-			//if there no "" _ in blankArray, you won
-			if (blankArray.indexOf(" _") === -1 && done === false) {
-
-				document.getElementById("iWasThinking").style.display = "initial";
-				document.getElementById("answer").innerHTML = correctAnswer.charAt(0).toUpperCase() + correctAnswer.slice(1);
-				wins = wins + 1;
-				done = true
-				document.getElementById("winCount").innerHTML = wins;
-				document.getElementById("gameOver").style.display = "initial"
-
-				document.getElementById("rightOrWrong").innerHTML = "Victorious";
-
-
-
-			};
-
-			//you lose
-			if (guessesLeft === 0 && done === false) {
-				guessesLeft = guessesLeft - 1;
-				done = true
-				document.getElementById("gameOver").style.display = "initial";
-				document.getElementById("rightOrWrong").innerHTML = "Defeated";
-				document.getElementById("iWasThinking").style.display = "initial";
-				document.getElementById("answer").innerHTML = correctAnswer.charAt(0).toUpperCase() + correctAnswer.slice(1);
-
-
-			}
-
-		};
-
-	};
-
-	function resetGame() {
-		//initialize variables and play again
-		correctAnswer = characters[Math.floor(Math.random() * characters.length)];
-		guessesLeft = 7;
-		whatYouGuessed = "";
-		blankArray = [];
-		tempString = correctAnswer.toLowerCase().split("");
-		done = false;
-
-
-		//hide the game 
-		document.getElementById("gameStart").style.display = "none";
-		document.getElementById("guessesRemaining").innerHTML = guessesLeft;
-		document.getElementById("gameOver").style.display = "none";
-		document.getElementById("iWasThinking").style.display = "none";
-
-
-
-	};
+	</style> -->
 
 
 
 
-	</script>
 </body>
 </html>
