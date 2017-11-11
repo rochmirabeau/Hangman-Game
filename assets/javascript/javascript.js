@@ -39,6 +39,7 @@
 		blankArray = [" _"];
 		guessSoFar = [];
 		restarted = true;
+		document.getElementById("portrait").src = getImage(correctAnswer);
 
 
 		document.getElementById("lettersGuessed").innerHTML = guessSoFar;
@@ -138,6 +139,7 @@
 		tempString = correctAnswer.toLowerCase().split("");
 		done = false;
 		restarted = false;
+		document.getElementById("portrait").src = getImage(correctAnswer);
 
 
 		//hide the game 
