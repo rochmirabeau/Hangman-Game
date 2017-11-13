@@ -33,12 +33,15 @@
 	var restarted = true;
 
 	function playGame() {
+		resetGame();
 		//initialize values
 		guessesLeft = 7;
 		whatYouGuessed = "";
 		blankArray = [" _"];
 		guessSoFar = [];
 		restarted = true;
+
+
 		document.getElementById("portrait").src = getImage(correctAnswer);
 
 
